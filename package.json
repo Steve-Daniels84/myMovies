@@ -1,0 +1,27 @@
+{
+  "scripts": {
+    "start": "node server.js"
+  },
+  "name": "myMovies",
+  "version": "1.0.0",
+  "main": "server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Steve-Daniels84/myMovies.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Steve-Daniels84/myMovies/issues"
+  },
+  "homepage": "https://github.com/Steve-Daniels84/myMovies#readme",
+  "description": "",
+  "devDependencies": {
+    "eslint": "^9.2.0"
+  },
+  "dependencies": {
+    "body-parser": "^1.20.2",
+    "express": "^4.19.2"
+  }
+}
