@@ -36,12 +36,21 @@ app.get('/', (req, res) => {
     res.send ('Test')
 })
 
+app.post('/movies', (req, res) => {
+    const message = 'No movie data in request body'
+    if (!req.body) {
+        res.status(400).send(message)
+    } else {
+        faveMovies.films.put()
+    }
+})
+
 app.get('/movies', (req, res) => {
-    res.json(faveMovies)
+    res.status(200).json(faveMovies)
 })
 
 app.get('/documentation', (req, res) => {
-    res.sendFile('documentation.html', {root: __dirname + '/public'});
+    res.status(200).sendFile('documentation.html', {root: __dirname + '/public'});
 })
 
 app.listen(8080, () => {
