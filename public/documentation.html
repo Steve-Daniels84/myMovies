@@ -3,13 +3,113 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Document</title>
+    <title>API Documentation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 0;
+            line-height: 1.6;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+        pre {
+            background: #f4f4f4;
+            padding: 10px;
+            border: 1px solid #ddd;
+            overflow-x: auto;
+        }
+        code {
+            background: #f4f4f4;
+            padding: 2px 4px;
+            border-radius: 4px;
+        }
+        .endpoint {
+            margin-bottom: 20px;
+        }
+        .endpoint h3 {
+            margin-top: 0;
+        }
+        .method {
+            font-size: 1.2em;
+            color: #007BFF;
+        }
+        .description {
+            margin: 10px 0;
+        }
+        .parameters, .response {
+            margin: 10px 0;
+        }
+        .parameters table, .response table {
+            width: 100%;
+            border-collapse: collapse;
+        }
+        .parameters th, .parameters td, .response th, .response td {
+            border: 1px solid #ddd;
+            padding: 8px;
+        }
+        .parameters th, .response th {
+            background: #f4f4f4;
+        }
+        footer {
+            text-align: center;
+            margin: 20px 0;
+            color: #888;
+        }
+    </style>
 </head>
 <body>
-    <div>
-        <h1>myMovies</h1>
-        <h2>Documentation</h2>
-        <p>This is a server side web app that provides information about movies. Data will include cover images, titles, cast, and movie synopsis.</p>
+    <div class="container">
+        <header>
+            <h1>myMovies API Documentation</h1>
+            <p>Welcome to the API documentation. Here you'll find all the information you need to integrate with our API.</p>
+        </header>
+
+        <section class="endpoint">
+            <h2>Endpoint 1: Lists all movie data</h2>
+            <div class="method">GET /movies</div>
+            <div class="description">Fetches the details of all movies in the archive and .</div>
+
+            
+
+            <div class="response">
+                <h3>Response</h3>
+                <pre>
+                    <code>
+                        {
+                            "title": "Mortal Engines",
+                            "year": "2012",
+                            "genre": "Fantasy"
+                        }
+                    </code>
+                </pre>
+            </div>
+        </section>
+
+        <section class="endpoint">
+            <h2>Endpoint 2: API Documentation</h2>
+            <div class="method">GET /documentation</div>
+            <div class="description">Shows the myMovies API Documentation.</div>
+
+
+
+            <div class="response">
+                <h3>Response</h3>
+                <pre><code>
+    "documentation.html"
+</code></pre>
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; 2024 Steve Daniels. All rights reserved.</p>
+        </footer>
     </div>
 </body>
 </html>

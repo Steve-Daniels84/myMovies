@@ -4,3 +4,5 @@
 ::1 - - [08/May/2024:21:31:49 +0000] "GET / HTTP/1.1" 200 4 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 ::1 - - [08/May/2024:21:31:49 +0000] "GET /favicon.ico HTTP/1.1" 404 150 "http://localhost:8080/" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
 ::1 - - [08/May/2024:21:31:53 +0000] "GET /movies HTTP/1.1" 200 345 "-" "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/124.0.0.0 Safari/537.36"
+::ffff:127.0.0.1 - - [14/May/2024:10:57:28 +0000] "GET /movies HTTP/1.1" 200 345 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [14/May/2024:11:01:51 +0000] "GET /documentation HTTP/1.1" 200 4090 "-" "Thunder Client (https://www.thunderclient.com)"
