@@ -5,111 +5,129 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>API Documentation</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            line-height: 1.6;
-        }
-        .container {
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        h1, h2, h3 {
-            color: #333;
-        }
-        pre {
-            background: #f4f4f4;
-            padding: 10px;
-            border: 1px solid #ddd;
-            overflow-x: auto;
-        }
-        code {
-            background: #f4f4f4;
-            padding: 2px 4px;
-            border-radius: 4px;
-        }
-        .endpoint {
-            margin-bottom: 20px;
-        }
-        .endpoint h3 {
-            margin-top: 0;
-        }
-        .method {
-            font-size: 1.2em;
-            color: #007BFF;
-        }
-        .description {
-            margin: 10px 0;
-        }
-        .parameters, .response {
-            margin: 10px 0;
-        }
-        .parameters table, .response table {
-            width: 100%;
-            border-collapse: collapse;
-        }
-        .parameters th, .parameters td, .response th, .response td {
-            border: 1px solid #ddd;
-            padding: 8px;
-        }
-        .parameters th, .response th {
-            background: #f4f4f4;
-        }
-        footer {
-            text-align: center;
-            margin: 20px 0;
-            color: #888;
-        }
+        body { font-family: Arial, sans-serif; line-height: 1.6; margin: 20px; }
+        h1 { color: #333; }
+        h2 { color: #555; }
+        code { background: #f4f4f4; padding: 2px 4px; border-radius: 4px; }
+        pre { background: #f4f4f4; padding: 10px; border-radius: 4px; }
     </style>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>myMovies API Documentation</h1>
-            <p>Welcome to the API documentation. Here you'll find all the information you need to integrate with our API.</p>
-        </header>
+    <h1>API Documentation</h1>
+    <p>Base URL: <code>http://localhost:8080</code></p>
 
-        <section class="endpoint">
-            <h2>Endpoint 1: Lists all movie data</h2>
-            <div class="method">GET /movies</div>
-            <div class="description">Fetches the details of all movies in the archive and .</div>
+    <h2>Endpoints</h2>
 
-            
+    <h3>Get All Movies</h3>
+    <p><strong>URL:</strong> <code>/movies</code></p>
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Description:</strong> Retrieves a list of all favorite movies.</p>
+    <pre>
+    <code>
+    Response:
+    Status: 200 OK
+    [
+        {"title":"Dune","year":"2022","genre":"Sci-fi"},
+        {"title":"Predator","year":"1988","genre":"Action"},
+        {"title":"The Notebook","year":"2003","genre":"Romance"},
+        {"title":"Moneyball","year":"2022","genre":"Sport History"},
+        {"title":"The Terminator","year":"1986","genre":"Sci-fi"},
+        {"title":"Mortal Engines","year":"2012","genre":"Fantasy"}
+    ]
+    </code>
+    </pre>
 
-            <div class="response">
-                <h3>Response</h3>
-                <pre>
-                    <code>
-                        {
-                            "title": "Mortal Engines",
-                            "year": "2012",
-                            "genre": "Fantasy"
-                        }
-                    </code>
-                </pre>
-            </div>
-        </section>
+    <h3>Get Movie by Title</h3>
+    <p><strong>URL:</strong> <code>/movies/:title</code></p>
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Description:</strong> Retrieves details of a specific movie by its title.</p>
+    <p><strong>URL Parameters:</strong> <code>title</code> (string) - The title of the movie to retrieve.</p>
+    <pre>
+    <code>
+    Response (if movie is found):
+    Status: 200 OK
+    {
+        "title": "Dune",
+        "year": "2022",
+        "genre": "Sci-fi"
+    }
 
-        <section class="endpoint">
-            <h2>Endpoint 2: API Documentation</h2>
-            <div class="method">GET /documentation</div>
-            <div class="description">Shows the myMovies API Documentation.</div>
+    Response (if movie is not found):
+    Status: 404 Not Found
+    Movie not found
+    </code>
+    </pre>
 
+    <h3>Add a New Movie</h3>
+    <p><strong>URL:</strong> <code>/movies</code></p>
+    <p><strong>Method:</strong> POST</p>
+    <p><strong>Description:</strong> Adds a new movie to the list of favorite movies.</p>
+    <p><strong>Request Body:</strong></p>
+    <pre>
+    <code>
+    {
+        "title": "New Movie",
+        "year": "2024",
+        "genre": "Drama"
+    }
+    </code>
+    </pre>
+    <pre>
+    <code>
+    Response (if movie is successfully added):
+    Status: 201 Created
+    {
+        "title": "New Movie",
+        "year": "2024",
+        "genre": "Drama"
+    }
 
+    Response (if request body is missing or invalid):
+    Status: 400 Bad Request
+    No movie data in request body
+    </code>
+    </pre>
 
-            <div class="response">
-                <h3>Response</h3>
-                <pre><code>
-    "documentation.html"
-</code></pre>
-            </div>
-        </section>
+    <h3>Get Documentation</h3>
+    <p><strong>URL:</strong> <code>/documentation</code></p>
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Description:</strong> Retrieves the API documentation.</p>
+    <pre>
+    <code>
+    Response:
+    Status: 200 OK
+    Serves the documentation.html file.
+    </code>
+    </pre>
 
-        <footer>
-            <p>&copy; 2024 Steve Daniels. All rights reserved.</p>
-        </footer>
-    </div>
+    <h3>Get Home Page</h3>
+    <p><strong>URL:</strong> <code>/</code></p>
+    <p><strong>Method:</strong> GET</p>
+    <p><strong>Description:</strong> Retrieves the home page.</p>
+    <pre>
+    <code>
+    Response:
+    Status: 200 OK
+    Serves the documentation.html file from the public directory.
+    </code>
+    </pre>
+
+    <h2>Error Handling</h2>
+    <p><strong>500 Internal Server Error:</strong> Catches any internal server errors and responds with a status code 500 and a message "Internal server error".</p>
+
+    <h2>Middleware</h2>
+    <p><strong>body-parser:</strong> Parses incoming request bodies in a middleware before your handlers, available under the <code>req.body</code> property.</p>
+    <p><strong>morgan:</strong> HTTP request logger middleware for Node.js, configured to write logs to <code>log.txt</code>.</p>
+
+    <h2>Logging</h2>
+    <p>Logs all HTTP requests to <code>log.txt</code> using morgan middleware.</p>
+
+    <h2>Static Files</h2>
+    <p>Serves static files from the <code>public</code> directory.</p>
+
+    <h2>Server Information</h2>
+    <p><strong>Port:</strong> 8080</p>
+    <p><strong>Listening on:</strong> <code>http://localhost:8080</code></p>
+
 </body>
 </html>
