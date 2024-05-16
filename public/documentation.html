@@ -27,12 +27,12 @@
     Response:
     Status: 200 OK
     [
-        {"title":"Dune","year":"2022","genre":"Sci-fi"},
-        {"title":"Predator","year":"1988","genre":"Action"},
-        {"title":"The Notebook","year":"2003","genre":"Romance"},
-        {"title":"Moneyball","year":"2022","genre":"Sport History"},
-        {"title":"The Terminator","year":"1986","genre":"Sci-fi"},
-        {"title":"Mortal Engines","year":"2012","genre":"Fantasy"}
+        {"title":"Dune","year":"2022","genre":"Sci-fi","id":"1"},
+        {"title":"Predator","year":"1988","genre":"Action", "id":"2"},
+        {"title":"The Notebook","year":"2003","genre":"Romance", "id":"3"},
+        {"title":"Moneyball","year":"2022","genre":"Sport History", "id":"4"},
+        {"title":"The Terminator","year":"1986","genre":"Sci-fi", "id":"5"},
+        {"title":"Mortal Engines","year":"2012","genre":"Fantasy", "id":"6"}
     ]
     </code>
     </pre>
@@ -49,7 +49,8 @@
     {
         "title": "Dune",
         "year": "2022",
-        "genre": "Sci-fi"
+        "genre": "Sci-fi",
+        "id": "1"
     }
 
     Response (if movie is not found):
@@ -79,12 +80,50 @@
     {
         "title": "New Movie",
         "year": "2024",
-        "genre": "Drama"
+        "genre": "Drama",
+        "id": "generated-uuid"
     }
 
     Response (if request body is missing or invalid):
     Status: 400 Bad Request
     No movie data in request body
+    </code>
+    </pre>
+
+    <h3>Update Movie Genre</h3>
+    <p><strong>URL:</strong> <code>/movies/:title/:genre</code></p>
+    <p><strong>Method:</strong> PUT</p>
+    <p><strong>Description:</strong> Updates the genre of a specific movie by its title.</p>
+    <p><strong>URL Parameters:</strong> 
+        <code>title</code> (string) - The title of the movie to update.<br>
+        <code>genre</code> (string) - The new genre for the movie.
+    </p>
+    <pre>
+    <code>
+    Response (if movie is found and updated):
+    Status: 201 Created
+    Movie {title} genre updated to new genre
+
+    Response (if movie is not found):
+    Status: 404 Not Found
+    Movie not found!
+    </code>
+    </pre>
+
+    <h3>Delete Movie by ID</h3>
+    <p><strong>URL:</strong> <code>/movies/:id</code></p>
+    <p><strong>Method:</strong> DELETE</p>
+    <p><strong>Description:</strong> Deletes a movie from the list by its ID.</p>
+    <p><strong>URL Parameters:</strong> <code>id</code> (string) - The ID of the movie to delete.</p>
+    <pre>
+    <code>
+    Response (if movie is found and deleted):
+    Status: 201 Created
+    Movie title was deleted successfully
+
+    Response (if movie is not found):
+    Status: 404 Not Found
+    Movie not found!
     </code>
     </pre>
 
@@ -124,10 +163,6 @@
 
     <h2>Static Files</h2>
     <p>Serves static files from the <code>public</code> directory.</p>
-
-    <h2>Server Information</h2>
-    <p><strong>Port:</strong> 8080</p>
-    <p><strong>Listening on:</strong> <code>http://localhost:8080</code></p>
 
 </body>
 </html>

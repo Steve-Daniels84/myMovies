@@ -1,2 +1,10 @@
-::ffff:127.0.0.1 - - [15/May/2024:13:21:00 +0000] "GET /movies HTTP/1.1" 200 335 "-" "Thunder Client (https://www.thunderclient.com)"
-::ffff:127.0.0.1 - - [15/May/2024:13:22:11 +0000] "GET /movies/Dune HTTP/1.1" 200 47 "-" "Thunder Client (https://www.thunderclient.com)"
+
+::ffff:127.0.0.1 - - [15/May/2024:21:12:31 +0000] "GET / HTTP/1.1" 200 5338 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [15/May/2024:21:13:06 +0000] "GET /documentation HTTP/1.1" 200 5338 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [15/May/2024:21:13:20 +0000] "GET /movies HTTP/1.1" 200 389 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [15/May/2024:21:13:37 +0000] "GET /movies/Dune HTTP/1.1" 200 56 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [15/May/2024:21:15:05 +0000] "POST /movies/ HTTP/1.1" 201 91 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [15/May/2024:21:16:03 +0000] "POST /movies/ HTTP/1.1" 201 29 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [15/May/2024:21:16:22 +0000] "POST /movies/ HTTP/1.1" 201 91 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [15/May/2024:21:16:56 +0000] "PUT /movies/Dune/Comedy HTTP/1.1" 201 28 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [15/May/2024:21:17:24 +0000] "DELETE /movies/1 HTTP/1.1" 201 29 "-" "Thunder Client (https://www.thunderclient.com)"
