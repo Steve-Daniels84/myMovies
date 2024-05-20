@@ -237,6 +237,36 @@ app.put('/users/:id', (req,res) => {
         res.status(400).send('Internal server error');
     }
 })
+//Add a favourite movie to a user
+app.put('/users/:id/:movieId', (req,res) => {
+    const user = users.find(user => {return user.id === req.params.id});
+    const movieId = req.params.movieId;
+
+    if (!user){
+        res.status(400).send('User not found');
+    }
+
+    if (movieId) {
+        user.favouriteMovies.push(movieId);
+        res.status(201).send('Movie added to users favourites');
+    } else {
+        res.status(400).send('Movie not added');
+    }
+})
+
+//Deletes a favourite movie from a user
+app.delete('/users/:id/:movieId', (req,res) => {
+    const user = users.find(user => {return user.id === req.params.id});
+    const userMovies = user.favouriteMovies;
+    const movieId = userMovies.find(movie => {movie === req.params.movieId});
+
+    console.log(movieId.indexOf());
+
+    
+
+    console.log(userMovies);
+    res.send('test');
+})
 
 app.listen(8080, () => {
     console.log('Listening on port 8080');
