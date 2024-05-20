@@ -208,16 +208,35 @@ app.post('/users', (req,res) => {
     user = req.body;
 
     if (user) {
-        user.id = uuidv4()
-        users.push(user);
-        res.status(201).send('User added');
+        if (user.Username && user.Email && user.password && user.Birthdate) {
+            user.id = uuid.v4();
+            users.push(user);
+            res.status(201).send('User added');
+        } else {
+            res.status(400).send('User must have a username, email, password and birthdate');
+        }
+
     } else {
-        res.status(400)
+        res.status(400).send('Internal Server Error');
     }
 
 })
 
-//Updates a user
+//Updates a user any of the values on the user record
+app.put('/users/:id', (req,res) => {
+    const user = users.find(user => {return user.id === req.params.id});
+    const {Username, Email, password, Birthdate} = req.body; 
+        
+    if (Username || Email || password || Birthdate) {   
+        if (Username) user.Username = Username;
+        if (Email) user.Email = Email;
+        if (password) user.password = password;
+        if (Birthdate) user.Birthdate = Birthdate;
+        res.status(201).send('User updated');
+    } else {
+        res.status(400).send('Internal server error');
+    }
+})
 
 app.listen(8080, () => {
     console.log('Listening on port 8080');
