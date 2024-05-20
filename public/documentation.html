@@ -151,6 +151,143 @@
     </code>
     </pre>
 
+    <h3>Get All Users</h3>
+<p><strong>URL:</strong> <code>/users</code></p>
+<p><strong>Method:</strong> GET</p>
+<p><strong>Description:</strong> Retrieves a list of all users.</p>
+<pre>
+<code>
+Response:
+Status: 200 OK
+[
+    {"id": "1", "Username": "user1", "Email": "user1@example.com", "Birthdate": "1990-01-01"},
+    {"id": "2", "Username": "user2", "Email": "user2@example.com", "Birthdate": "1992-02-02"}
+]
+</code>
+</pre>
+
+<h3>Get User by ID</h3>
+<p><strong>URL:</strong> <code>/users/:id</code></p>
+<p><strong>Method:</strong> GET</p>
+<p><strong>Description:</strong> Retrieves details of a specific user by their ID.</p>
+<p><strong>URL Parameters:</strong> <code>id</code> (string) - The ID of the user to retrieve.</p>
+<pre>
+<code>
+Response (if user is found):
+Status: 200 OK
+{
+    "id": "1",
+    "Username": "user1",
+    "Email": "user1@example.com",
+    "Birthdate": "1990-01-01"
+}
+
+Response (if user is not found):
+Status: 400 Bad Request
+User not found
+</code>
+</pre>
+
+<h3>Add a New User</h3>
+<p><strong>URL:</strong> <code>/users</code></p>
+<p><strong>Method:</strong> POST</p>
+<p><strong>Description:</strong> Adds a new user.</p>
+<p><strong>Request Body:</strong></p>
+<pre>
+<code>
+{
+    "Username": "newuser",
+    "Email": "newuser@example.com",
+    "password": "password123",
+    "Birthdate": "2000-01-01"
+}
+</code>
+</pre>
+<pre>
+<code>
+Response (if user is successfully added):
+Status: 201 Created
+User added
+
+Response (if request body is missing or invalid):
+Status: 400 Bad Request
+User must have a username, email, password, and birthdate
+</code>
+</pre>
+
+<h3>Update User</h3>
+<p><strong>URL:</strong> <code>/users/:id</code></p>
+<p><strong>Method:</strong> PUT</p>
+<p><strong>Description:</strong> Updates any of the values on the user record.</p>
+<p><strong>URL Parameters:</strong> <code>id</code> (string) - The ID of the user to update.</p>
+<p><strong>Request Body:</strong> Fields to update (at least one is required).</p>
+<pre>
+<code>
+{
+    "Username": "updateduser",
+    "Email": "updateduser@example.com",
+    "password": "newpassword123",
+    "Birthdate": "2000-01-01"
+}
+</code>
+</pre>
+<pre>
+<code>
+Response (if user is found and updated):
+Status: 201 Created
+User updated
+
+Response (if user is not found):
+Status: 400 Bad Request
+Internal server error
+</code>
+</pre>
+
+<h3>Add a Favourite Movie to a User</h3>
+<p><strong>URL:</strong> <code>/users/:id/:movieId</code></p>
+<p><strong>Method:</strong> PUT</p>
+<p><strong>Description:</strong> Adds a favourite movie to a user's list of favourite movies.</p>
+<p><strong>URL Parameters:</strong> 
+    <code>id</code> (string) - The ID of the user.<br>
+    <code>movieId</code> (string) - The ID of the movie to add.
+</p>
+<pre>
+<code>
+Response (if user is found and movie is added):
+Status: 201 Created
+Movie added to user's favourites
+
+Response (if user is not found):
+Status: 400 Bad Request
+User not found
+
+Response (if movie is not added):
+Status: 400 Bad Request
+Movie not added
+</code>
+</pre>
+
+<h3>Delete a Favourite Movie from a User</h3>
+<p><strong>URL:</strong> <code>/users/:id/:movieId</code></p>
+<p><strong>Method:</strong> DELETE</p>
+<p><strong>Description:</strong> Deletes a favourite movie from a user's list by its ID.</p>
+<p><strong>URL Parameters:</strong> 
+    <code>id</code> (string) - The ID of the user.<br>
+    <code>movieId</code> (string) - The ID of the movie to delete.
+</p>
+<pre>
+<code>
+Response (if user is found and movie is deleted):
+Status: 200 OK
+Movie deleted successfully
+
+Response (if user is not found):
+Status: 400 Bad Request
+User not found
+</code>
+</pre>
+
+
     <h2>Error Handling</h2>
     <p><strong>500 Internal Server Error:</strong> Catches any internal server errors and responds with a status code 500 and a message "Internal server error".</p>
 

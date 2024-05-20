@@ -222,7 +222,7 @@ app.post('/users', (req,res) => {
 
 })
 
-//Updates a user any of the values on the user record
+//Updates any of the values on the user record
 app.put('/users/:id', (req,res) => {
     const user = users.find(user => {return user.id === req.params.id});
     const {Username, Email, password, Birthdate} = req.body; 
@@ -258,13 +258,8 @@ app.put('/users/:id/:movieId', (req,res) => {
 app.delete('/users/:id/:movieId', (req,res) => {
     const user = users.find(user => {return user.id === req.params.id});
     const userMovies = user.favouriteMovies;
-    const movieId = userMovies.find(movie => {movie === req.params.movieId});
-
-    console.log(movieId.indexOf());
-
-    
-
-    console.log(userMovies);
+    const index = userMovies.indexOf(req.params.movieId);
+    userMovies.splice(index, index);
     res.send('test');
 })
 
