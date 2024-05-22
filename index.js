@@ -35,7 +35,7 @@ app.get('/', (req, res) => {
     res.status(200).sendFile('documentation.html', {root: __dirname + '/public'});
 })
 
-Add new movie into dataset
+// Add new movie into dataset
 app.post('/movies', async (req, res) => {
     await movies.findOne({Title: req.body.Title})
         .then((movie) => {
@@ -88,32 +88,39 @@ movies.find({Title: req.params.Title})
     })
 })
 
+//Finds a movie and updates the genre
+app.put('/movies/:title/:genre', async (req, res) => {
+    await movies.findOneAndUpdate({Title:  req.params.title},{
+        $set: 
+                {
+                    "Genre.Name": req.params.genre,
+                    "Genre.Description": req.body.Description
+                }
+            },
+            {new:true}
+        )
+        .then(
+            res.status(200).send('Genre details updated')
+        )
+        .catch((error) => {
+            res.status(400).send('Error: ' + error);
+        })
+});
+
 //Routes to documentation page
 app.get('/documentation', (req, res) => {
     res.status(200).sendFile('documentation.html', {root: __dirname + '/public'});
 });
 
-//Finds a movie and updates the genre
-app.put('/movies/:title/:genre', (req, res) => {
-    const movie = faveMovies.find(movie => movie.Title === req.params.title);
-
-    if(movie) {
-        movie.Genre.Name = req.params.genre;
-        res.status(201).send(movie.Title + ' genre updated to ' + req.params.genre);
-       
-    } else {
-        response.status(404).send('Movie not found!');
-    }
-})
-
-//Deletes a movie from the dataset by its id
+//Deletes a movie from the db by its id
 app.delete('/movies/:id', async (req,res) => {
+    const movieId = req.params.id;
     await movies.findOneAndDelete({ _id: req.params.id})
     .then((movies) => {
         if (!movies) {
-            res.status(400).send('Movie ' + req.params.movieId + ' was not found');
+            res.status(400).send('Movie ' + movieId + ' was not found');
         } else {
-            res.status(200).send('movie ' + req.params.movieId + ' was deleted');
+            res.status(200).send('movie ' + movieId + ' was deleted');
         }
     })
     .catch((err) => {
