@@ -5,7 +5,7 @@ const express = require('express'),
     path = require('path'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
-    models = require('./models.js'),
+    models = require('./models/models.js'),
     movies = models.Movie,
     users = models.User;
 
