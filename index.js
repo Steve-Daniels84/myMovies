@@ -53,7 +53,7 @@ app.delete('/movies/:id', passport.authenticate('jwt', { session: false }),  mov
 app.get('/users', passport.authenticate('jwt', { session: false }),  users.listUsers); //Lists all users
 app.get('/users/:id', passport.authenticate('jwt', { session: false }),  users.getUserById); //Gets a user by its id
 app.put('/users/:id',passport.authenticate('jwt', { session: false }), users.updateUser); //Update a user
-app.post('/users/:id', users.addUser); //Add a user
+app.post('/users/', users.addUser); //Add a user
 app.delete('/users/:id', passport.authenticate('jwt', { session: false }),  users.deleteUser); //Delete a user
 app.post('/users/:id/:movieId', passport.authenticate('jwt', { session: false }),  users.addMovie); //Add a favourite movie to a user
 app.delete('/users/:id/:movieId', passport.authenticate('jwt', { session: false }),  users.deleteMovie); //Deletes a fovurite movie from a user
