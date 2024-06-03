@@ -58,3 +58,8 @@
 ::ffff:127.0.0.1 - - [03/Jun/2024:21:46:28 +0000] "GET /users HTTP/1.1" 200 1370 "-" "Thunder Client (https://www.thunderclient.com)"
 ::ffff:127.0.0.1 - - [03/Jun/2024:21:46:40 +0000] "PUT /users/664a66110f0177a700e79dc3 HTTP/1.1" 400 17 "-" "Thunder Client (https://www.thunderclient.com)"
 ::ffff:127.0.0.1 - - [03/Jun/2024:21:48:11 +0000] "GET /users HTTP/1.1" 200 1370 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - Steve Deeds [03/Jun/2024:21:57:45 +0000] "POST /users HTTP/1.1" 404 145 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - Steve Deeds [03/Jun/2024:21:58:39 +0000] "POST /users HTTP/1.1" 201 130 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [03/Jun/2024:21:59:05 +0000] "GET /users HTTP/1.1" 200 1501 "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [03/Jun/2024:21:59:11 +0000] "GET /users HTTP/1.1" 401 - "-" "Thunder Client (https://www.thunderclient.com)"
+::ffff:127.0.0.1 - - [03/Jun/2024:21:59:14 +0000] "GET /users HTTP/1.1" 200 1501 "-" "Thunder Client (https://www.thunderclient.com)"
