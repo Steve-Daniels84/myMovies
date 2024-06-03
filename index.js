@@ -13,6 +13,11 @@ app = express();
 
 app.use(bodyParser.json());
 
+let auth = require('./controllers/auth/auth.js')(app);
+
+const passport = require('passport');
+require('./controllers/auth/passport.js');
+
 //create log stream
 const accessLogStream = fs.createWriteStream(path.join(__dirname, 'log.txt'), {flags: 'a'}); 
 
@@ -38,19 +43,20 @@ app.get('/documentation', (req, res) => {
 });
 
 //Movie routes
-app.get('/movies', movies.listAllMovies); //list all movies
-app.get('/movies/:Title', movies.getMovieByTitle);//Get movie by title
-app.post('/movies', movies.addMovie); //Adds a movie to the library
-app.put('/movies/:Title', movies.updateGenreByMovieTitle); //Update Genre info for a movie by its title
-app.delete('/movies/:id', movies.deleteMovieById); //Delete a movie by ID
+app.get('/movies', passport.authenticate('jwt', { session: false }), movies.listAllMovies); //list all movies
+app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), movies.getMovieByTitle);//Get movie by title
+app.post('/movies', passport.authenticate('jwt', { session: false }),  movies.addMovie); //Adds a movie to the library
+app.put('/movies/:Title', passport.authenticate('jwt', { session: false }),  movies.updateGenreByMovieTitle); //Update Genre info for a movie by its title
+app.delete('/movies/:id', passport.authenticate('jwt', { session: false }),  movies.deleteMovieById); //Delete a movie by ID
 
 //User routes
-app.get('/users', users.listUsers); //Lists all users
-app.get('/users/:id', users.getUserById); //Gets a user by its id
-app.post('/users', users.addUser); //Add a user
-app.delete('/users/:id', users.deleteUser); //Delete a user
-app.post('/users/:id/:movieId', users.addMovie); //Add a favourite movie to a user
-app.delete('/users/:id/:movieId', users.deleteMovie); //Deletes a fovurite movie from a user
+app.get('/users', passport.authenticate('jwt', { session: false }),  users.listUsers); //Lists all users
+app.get('/users/:id', passport.authenticate('jwt', { session: false }),  users.getUserById); //Gets a user by its id
+app.put('/users/:id',passport.authenticate('jwt', { session: false }), users.updateUser); //Update a user
+app.post('/users/:id', users.addUser); //Add a user
+app.delete('/users/:id', passport.authenticate('jwt', { session: false }),  users.deleteUser); //Delete a user
+app.post('/users/:id/:movieId', passport.authenticate('jwt', { session: false }),  users.addMovie); //Add a favourite movie to a user
+app.delete('/users/:id/:movieId', passport.authenticate('jwt', { session: false }),  users.deleteMovie); //Deletes a fovurite movie from a user
 
 app.listen(8080, () => {
     console.log('Listening on port 8080');

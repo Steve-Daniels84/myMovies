@@ -26,6 +26,28 @@ async function getUserById (req, res) {
     })
 };
 
+async function updateUser (req,res) {
+    if (req.user.id !== req.params.id) {
+        return res.status(400).send('Permission Denied');
+    }
+    await Users.findOneAndUpdate({_id: req.params.id}, {
+        $set:
+        {
+            Username: req.body.Username,
+            Password: req.body.Password,
+            Email: req.body.Email
+        }
+    },
+    {new:true})
+    .then((updatedUser) => {
+        res.json(updatedUser);
+    })
+    .catch((err) => {
+        console.log(err);
+        res.status(500).send('Error: ' + err);
+    })
+}
+
 async function addUser (req, res) {
     await Users.findOne({Username: req.body.Username})
         .then((user) => {
@@ -102,5 +124,5 @@ async function deleteMovie (req,res) {
 }
 
 module.exports = {
-    listUsers, getUserById, addUser, deleteUser, addMovie, deleteMovie
+    listUsers, getUserById, addUser, deleteUser, addMovie, deleteMovie, updateUser
 }
