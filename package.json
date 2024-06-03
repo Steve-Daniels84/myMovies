@@ -18,6 +18,7 @@
   "homepage": "https://github.com/Steve-Daniels84/myMovies#readme",
   "description": "",
   "dependencies": {
+    "async_hooks": "^1.0.0",
     "body-parser": "^1.20.2",
     "express": "^4.19.2",
     "jsonwebtoken": "^9.0.2",
