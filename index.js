@@ -32,75 +32,22 @@ app.get('/', (req, res) => {
     res.status(200).sendFile('documentation.html', {root: __dirname + '/public'});
 })
 
+//Routes to documentation page
+app.get('/documentation', (req, res) => {
+    res.status(200).sendFile('documentation.html', {root: __dirname + '/public'});
+});
+
 //Movie routes
 app.get('/movies', movies.listAllMovies); //list all movies
 app.get('/movies/:Title', movies.getMovieByTitle);//Get movie by title
 app.post('/movies', movies.addMovie); //Adds a movie to the library
 app.put('/movies/:Title', movies.updateGenreByMovieTitle); //Update Genre info for a movie by its title
+app.delete('/movies/:id', movies.deleteMovieById); //Delete a movie by ID
 
-
-// //Routes to documentation page
-app.get('/documentation', (req, res) => {
-    res.status(200).sendFile('documentation.html', {root: __dirname + '/public'});
-});
-
-// //Deletes a movie from the db by its id
-// app.delete('/movies/:id', async (req,res) => {
-//     const movieId = req.params.id;
-//     await movies.findOneAndDelete({ _id: req.params.id})
-//     .then((movies) => {
-//         if (!movies) {
-//             res.status(400).send('Movie ' + movieId + ' was not found');
-//         } else {
-//             res.status(200).send('movie ' + movieId + ' was deleted');
-//         }
-//     })
-//     .catch((err) => {
-//         console.error(err);
-//         res.status(500).send('Error: ' + err);
-//     })
-// })
-
-// //Gets a list of all users
-// app.get ('/users', (req,res) => {
-//     users.find().then(users => res.status(200).json(users));
-// })
-
-// //Gets a user by id
-// app.get('/users/:id', (req, res) => {
-//     users.find({'_id': req.params.id})
-//     .then((users)=> {
-//             res.status(200).json(users);
-//         }).catch((err) => {
-//             res.status(400).send('No user found with this Id');
-//         })
-//     })
-
-// //Adds a user
-// app.post('/users', async (req,res) => {
-//     await users.findOne({Username: req.body.Username})
-//         .then((user) => {
-//             if (user) {
-//                 return res.status(400).send(req.body.Username + ' already exists');
-//             } else {
-//                 users
-//                     .create({
-//                         Username: req.body.Username,
-//                         Password: req.body.Password,
-//                         Email: req.body.Email
-//                     })
-//                 .then((user) => {res.status(201).json(user)})
-//                 .catch((error) => {
-//                     console.error(error);
-//                     res.status(500).send('Error: ' + error);
-//                 })
-//             }
-//     })
-//     .catch((error) => {
-//         console.error(error);
-//         res.status(500).send('Error: ' + error);
-//     })
-// })
+//User routes
+app.get('/users', users.listUsers); //Lists all users
+app.get('/users/:id', users.getUserById); //Gets a user by its id
+app.post('/users', users.addUser);
 
 // //Deletes a user from the dataset by its id
 // app.delete('/users/:id', async (req,res) => {

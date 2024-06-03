@@ -59,7 +59,7 @@ async function addMovie (req, res) {
         })
     };
 
-    async function updateGenreByMovieTitle(req, res) {
+    async function updateGenreByMovieTitle (req, res) {
         try {
             const updatedMovie = await Movies.findOneAndUpdate(
                 { Title: req.params.Title },
@@ -81,7 +81,22 @@ async function addMovie (req, res) {
         }
     }
     
+    async function deleteMovieById (req, res) {
+        const movieId = req.params.id;
+    await Movies.findOneAndDelete({ _id: req.params.id})
+    .then((movies) => {
+        if (!movies) {
+            res.status(400).send('Movie ' + movieId + ' was not found');
+        } else {
+            res.status(200).send('movie ' + movieId + ' was deleted');
+        }
+    })
+    .catch((err) => {
+        console.error(err);
+        res.status(500).send('Error: ' + err);
+    })
+    };
 
 module.exports = {
-    listAllMovies, getMovieByTitle, addMovie, updateGenreByMovieTitle
+    listAllMovies, getMovieByTitle, addMovie, updateGenreByMovieTitle, deleteMovieById
 }
