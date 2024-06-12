@@ -1,8 +1,8 @@
 const passport = require('passport'),
   LocalStrategy = require('passport-local').Strategy,
-  Models = require('/Users/stephendaniels/Documents/Career_Foundry_Projects/myMovies/myMovies/models/models.js'),
+  Models = require('../../models/models.js'),
   passportJWT = require('passport-jwt'),
-  userController = require('/Users/stephendaniels/Documents/Career_Foundry_Projects/myMovies/myMovies/controllers/users.js');
+  userController = require('../users.js');
 
 let Users = Models.User,
   JWTStrategy = passportJWT.Strategy,
@@ -43,13 +43,23 @@ passport.use(
 
 passport.use(new JWTStrategy({
   jwtFromRequest: ExtractJWT.fromAuthHeaderAsBearerToken(),
-  secretOrKey: 'your_jwt_secret'
-}, async (jwtPayload, callback) => {
-  return await Users.findById(jwtPayload.id)
-    .then((user) => {
+  secretOrKey: 'your_jwt_secret',
+  passReqToCallback: true
+}, async (req, jwtPayload, callback) => {
+  try {
+    const user = await Users.findById(jwtPayload.id);
+    const role = user.Role;
+    if (!user) {
+      return callback(null, false, {message: "User not found"})
+    }
+
+    if (role === req.requiredRole) {
       return callback(null, user);
-    })
-    .catch((error) => {
+    } else {
+      return callback(null, false, {message: "Insufficient Privileges"})
+    }
+  }
+   catch(error){
       return callback(error)
-    });
-}));
+    }
+}))

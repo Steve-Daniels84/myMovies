@@ -5,9 +5,10 @@ const express = require('express'),
     path = require('path'),
     bodyParser = require('body-parser'),
     mongoose = require('mongoose'),
-    models = require('./models/models.js'),
     movies = require('./controllers/movies.js'),
     users = require('./controllers/users.js');
+    
+const requiredRole = require('./controllers/role.js');
 
 app = express();
 
@@ -43,14 +44,14 @@ app.get('/documentation', (req, res) => {
 });
 
 //Movie routes
-app.get('/movies', passport.authenticate('jwt', { session: false }), movies.listAllMovies); //list all movies
-app.get('/movies/:Title', passport.authenticate('jwt', { session: false }), movies.getMovieByTitle);//Get movie by title
-app.post('/movies', passport.authenticate('jwt', { session: false }),  movies.addMovie); //Adds a movie to the library
-app.put('/movies/:Title', passport.authenticate('jwt', { session: false }),  movies.updateGenreByMovieTitle); //Update Genre info for a movie by its title
-app.delete('/movies/:id', passport.authenticate('jwt', { session: false }),  movies.deleteMovieById); //Delete a movie by ID
+app.get('/movies', requiredRole('user'), passport.authenticate('jwt', { session: false }), movies.listAllMovies); //list all movies
+app.get('/movies/:Title', requiredRole('user'), passport.authenticate('jwt', { session: false }), movies.getMovieByTitle);//Get movie by title
+app.post('/movies', requiredRole('user'), passport.authenticate('jwt', { session: false }),  movies.addMovie); //Adds a movie to the library
+app.put('/movies/:Title', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }), movies.updateGenreByMovieTitle); //Update Genre info for a movie by its title
+app.delete('/movies/:id', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }), movies.deleteMovieById); //Delete a movie by ID
 
 //User routes
-app.get('/users', passport.authenticate('jwt', { session: false }),  users.listUsers); //Lists all users
+app.get('/users', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }),  users.listUsers); //Lists all users
 app.get('/users/:id', passport.authenticate('jwt', { session: false }),  users.getUserById); //Gets a user by its id
 app.put('/users/:id',passport.authenticate('jwt', { session: false }), users.updateUser); //Update a user
 app.post('/users/', users.addUser); //Add a user

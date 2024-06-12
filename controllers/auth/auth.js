@@ -2,7 +2,7 @@ const jwtSecret = 'your_jwt_secret';
 const jwt = require('jsonwebtoken'),
       passport = require('passport');
 
-require('/Users/stephendaniels/Documents/Career_Foundry_Projects/myMovies/myMovies/controllers/auth/passport.js'); // Your local passport file
+require('./passport.js'); // Your local passport file
 
 
 let generateJWTToken = (user) => {
@@ -24,6 +24,7 @@ module.exports = (router) => {
       let payload = {
         Username: user.Username,
         id: user.id,
+        
       }
 
       if (error || !user) {
