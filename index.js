@@ -8,8 +8,10 @@ const express = require('express'),
     movies = require('./controllers/movies.js'),
     users = require('./controllers/users.js'),
     cors = require('cors');
-    
-const requiredRole = require('./controllers/validations.js');
+
+const { check, validationResult } = require('express-validator');
+const {requiredRole, validateInput} = require('./validation/validations.js');
+const {createUserRules} = require('./validation/rules.js');
 
 app = express();
 
@@ -53,9 +55,8 @@ app.delete('/movies/:id', requiredRole('sysAdmin'), passport.authenticate('jwt',
 app.get('/users', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }),  users.listUsers); //Lists all users
 app.get('/users/:id', requiredRole('user'), passport.authenticate('jwt', { session: false }),  users.getUserById); //Gets a user by its id
 app.put('/users/:id', requiredRole('user'), passport.authenticate('jwt', { session: false }), users.updateUser); //Update a user
-app.post('/users/', users.addUser); //Add a user
+app.post('/users/', createUserRules, validateInput, users.addUser); //Add a user
 app.delete('/users/:id', requiredRole('user'), passport.authenticate('jwt', { session: false }), users.deleteUser); //Delete a user
-app.post('/users/:id/:movieId', requiredRole('user'), passport.authenticate('jwt', { session: false }),  users.addMovie); //Add a favourite movie to a user
 app.delete('/users/:id/:movieId', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }),  users.deleteMovie); //Deletes a fovurite movie from a user
 
 app.listen(8080, () => {

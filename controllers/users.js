@@ -1,12 +1,11 @@
-const mongoose = require('mongoose');
+const mongoose = require('mongoose'),
+requiredRole = require('../validation/validations.js');
 
 mongoose.connect('mongodb://localhost:27017/myMovies', {useNewUrlParser: true, useUnifiedTopology: true});
 
 const Models = require('../models/models.js');
 
 let Users = Models.User;
-
-const { check, validationResult } = require('express-validator');
 
 async function listUsers (req, res) {
    await Users.find()
@@ -59,6 +58,7 @@ async function updateUser (req,res) {
 
 async function addUser (req, res) {
     let hashedPassword = Users.hashPassword(req.body.Password);
+
     await Users.findOne({Username: req.body.Username})
         .then((user) => {
             if (user) {
