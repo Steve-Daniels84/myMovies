@@ -21,14 +21,12 @@ passport.use(
           return callback(null, false, {
             message: 'Incorrect username.',
           });
-        } else {
-          const check = userController.validatePassword(username, password)
-          if (password === user.Password) {
-            return callback(null, user, {message: 'Password correct'})
-          } else {
-            return callback(null, false, {message: 'Incorrect password'})
-          }
+        } if (!user.validatePassword(password)) {
+          console.log('incorrect password');
+          return callback(null, false, { message: 'Incorrect password.' });
         }
+        console.log('finished');
+        return callback(null, user);
       })
       .catch((error) => {
         if (error) {
@@ -53,7 +51,7 @@ passport.use(new JWTStrategy({
       return callback(null, false, {message: "User not found"})
     }
 
-    if (role === req.requiredRole) {
+    if (role === req.requiredRole || role === 'sysAdmin') {
       return callback(null, user);
     } else {
       return callback(null, false, {message: "Insufficient Privileges"})

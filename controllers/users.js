@@ -6,6 +6,8 @@ const Models = require('../models/models.js');
 
 let Users = Models.User;
 
+const { check, validationResult } = require('express-validator');
+
 async function listUsers (req, res) {
    await Users.find()
    .then (users => {
@@ -56,6 +58,7 @@ async function updateUser (req,res) {
 }
 
 async function addUser (req, res) {
+    let hashedPassword = Users.hashPassword(req.body.Password);
     await Users.findOne({Username: req.body.Username})
         .then((user) => {
             if (user) {
@@ -64,8 +67,9 @@ async function addUser (req, res) {
                 Users
                     .create({
                         Username: req.body.Username,
-                        Password: req.body.Password,
-                        Email: req.body.Email
+                        Password: hashedPassword,
+                        Email: req.body.Email,
+                        Role: 'user'
                     })
                 .then((user) => {res.status(201).json(user)})
                 .catch((error) => {
