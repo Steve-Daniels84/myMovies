@@ -10,8 +10,8 @@ const express = require('express'),
     cors = require('cors');
 
 const { check, validationResult } = require('express-validator');
-const {requiredRole, validateInput} = require('./validation/validations.js');
-const {createUserRules} = require('./validation/rules.js');
+const {requiredRole, validateInput, validateUserId} = require('./validation/validations.js');
+const {createUserRules, updateUserRules} = require('./validation/rules.js');
 
 app = express();
 
@@ -47,18 +47,20 @@ app.get('/documentation', (req, res) => {res.status(200).sendFile('documentation
 //Movie routes
 app.get('/movies', requiredRole('user'), passport.authenticate('jwt', { session: false }), movies.listAllMovies); //list all movies
 app.get('/movies/:Title', requiredRole('user'), passport.authenticate('jwt', { session: false }), movies.getMovieByTitle);//Get movie by title
-app.post('/movies', requiredRole('user'), passport.authenticate('jwt', { session: false }),  movies.addMovie); //Adds a movie to the library
+app.post('/movies', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }),  movies.addMovie); //Adds a movie to the library
 app.put('/movies/:Title', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }), movies.updateGenreByMovieTitle); //Update Genre info for a movie by its title
 app.delete('/movies/:id', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }), movies.deleteMovieById); //Delete a movie by ID
 
 //User routes
 app.get('/users', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }),  users.listUsers); //Lists all users
-app.get('/users/:id', requiredRole('user'), passport.authenticate('jwt', { session: false }),  users.getUserById); //Gets a user by its id
-app.put('/users/:id', requiredRole('user'), passport.authenticate('jwt', { session: false }), users.updateUser); //Update a user
+app.get('/users/:id', requiredRole('user'), passport.authenticate('jwt', { session: false }), validateUserId,  users.getUserById); //Gets a user by its id
+app.put('/users/:id', updateUserRules, validateInput, requiredRole('user'), passport.authenticate('jwt', { session: false }), validateUserId, users.updateUser); //Update a user
+app.put('/users/:id', )
 app.post('/users/', createUserRules, validateInput, users.addUser); //Add a user
-app.delete('/users/:id', requiredRole('user'), passport.authenticate('jwt', { session: false }), users.deleteUser); //Delete a user
-app.delete('/users/:id/:movieId', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }),  users.deleteMovie); //Deletes a fovurite movie from a user
+app.delete('/users/:id', requiredRole('user'), passport.authenticate('jwt', { session: false }), validateUserId, users.deleteUser); //Delete a user
+app.delete('/users/:id/:movieId', requiredRole('user'), passport.authenticate('jwt', { session: false }), validateUserId, users.deleteMovie); //Deletes a fovurite movie from a user
 
-app.listen(8080, () => {
-    console.log('Listening on port 8080');
+const port = process.env.PORT || 8080;
+app.listen(port,'0.0.0.0', () => {
+    console.log('Listening on port: ' + port);
 })

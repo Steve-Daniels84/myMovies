@@ -1,6 +1,6 @@
 {
   "scripts": {
-    "start": "node server.js"
+    "start": "node index.js"
   },
   "name": "myMovies",
   "version": "1.0.0",

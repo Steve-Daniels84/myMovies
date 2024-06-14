@@ -35,20 +35,19 @@ async function getUserByUsername (req, res) {
 }
 
 async function updateUser (req,res) {
-    if (req.user.id !== req.params.id) {
-        return res.status(400).send('Permission Denied');
-    }
+    if (req.body.Password) {
+        res.status (400).send("You are not permitted to update your password here")
+    }else if (req.body)
     await Users.findOneAndUpdate({_id: req.params.id}, {
         $set:
         {
             Username: req.body.Username,
-            Password: req.body.Password,
             Email: req.body.Email
         }
     },
     {new:true})
     .then((updatedUser) => {
-        res.json(updatedUser);
+        res.send('User: ' + req.params.id + ' has been updated');
     })
     .catch((err) => {
         console.log(err);
@@ -134,15 +133,8 @@ async function deleteMovie (req,res) {
     }
 }
 
-async function validatePassword (username, password) {
-    await Users.findOne({Username: username})
-    .then((user) => {
-        if (user.Password = password) {
-            return true
-        } else {return false}
-    }) 
-}
+//Need an endpoint for password updating
 
 module.exports = {
-    listUsers, getUserById, addUser, deleteUser, addMovie, deleteMovie, updateUser, validatePassword, getUserByUsername
+    listUsers, getUserById, addUser, deleteUser, addMovie, deleteMovie, updateUser,  getUserByUsername
 }
