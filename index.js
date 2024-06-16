@@ -57,6 +57,7 @@ app.get('/users/:id', requiredRole('user'), passport.authenticate('jwt', { sessi
 app.put('/users/:id', updateUserRules, validateInput, requiredRole('user'), passport.authenticate('jwt', { session: false }), validateUserId, users.updateUser); //Update a user
 app.put('/users/:id', )
 app.post('/users/', createUserRules, validateInput, users.addUser); //Add a user
+app.put('/users/:id/:movieId', requiredRole('user'), passport.authenticate('jwt', {session: false}), validateUserId, users.addMovie) //Adds a movie to a users favourites
 app.delete('/users/:id', requiredRole('user'), passport.authenticate('jwt', { session: false }), validateUserId, users.deleteUser); //Delete a user
 app.delete('/users/:id/:movieId', requiredRole('user'), passport.authenticate('jwt', { session: false }), validateUserId, users.deleteMovie); //Deletes a fovurite movie from a user
 

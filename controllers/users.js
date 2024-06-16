@@ -105,7 +105,7 @@ async function addMovie (req, res) {
         },
         {new: true})
     .then((updatedUser) => {
-        res.status(200).json(updatedUser);
+        res.status(200).send('Movie favourited successfully');
     })
     .catch((err) => {
         console.error(err);
@@ -127,7 +127,7 @@ async function deleteMovie (req,res) {
         if (!updatedUser) {
             return res.status(404).send({message: 'User not found'});        
         }
-        res.status(200).json(updatedUser)
+        res.status(200).send('Favourite movie removed successfully')
     } catch (error) {
         res.status(500).send({message: 'Error: ' + error});
     }
