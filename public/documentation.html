@@ -18,39 +18,63 @@
 
     <h2>Endpoints</h2>
 
-    <h3>Get All Movies</h3>
+    <h3>Movie Endpoints</h3>
+
+    <h4>Get All Movies</h4>
     <p><strong>URL:</strong> <code>/movies</code></p>
     <p><strong>Method:</strong> GET</p>
-    <p><strong>Description:</strong> Retrieves a list of all favorite movies.</p>
+    <p><strong>Description:</strong> Retrieves a list of all movies.</p>
     <pre>
     <code>
     Response:
     Status: 200 OK
     [
-        {"title":"Dune","year":"2022","genre":"Sci-fi","id":"1"},
-        {"title":"Predator","year":"1988","genre":"Action", "id":"2"},
-        {"title":"The Notebook","year":"2003","genre":"Romance", "id":"3"},
-        {"title":"Moneyball","year":"2022","genre":"Sport History", "id":"4"},
-        {"title":"The Terminator","year":"1986","genre":"Sci-fi", "id":"5"},
-        {"title":"Mortal Engines","year":"2012","genre":"Fantasy", "id":"6"}
+        {
+            "_id": "664a6b0e0f0177a700e79dc7",
+            "Title": "The Lion King",
+            "Description": "Lion prince Simba and his father are targeted by his bitter uncle, who wants to ascend the throne himself.",
+            "Genre": {
+                "Name": "Animation",
+                "Description": "Animation film is a genre in which the images are primarily created through animation techniques."
+            },
+            "Director": {
+                "Name": "Roger Allers and Rob Minkoff",
+                "Bio": "Roger Allers is an American film director, screenwriter, and animator. Rob Minkoff is an American filmmaker.",
+                "Birth": "1949 (Allers), 1962 (Minkoff)"
+            },
+            "ImagePath": "lionking.png",
+            "Featured": true,
+            "movieId": "00010"
+        }
     ]
     </code>
     </pre>
 
-    <h3>Get Movie by Title</h3>
-    <p><strong>URL:</strong> <code>/movies/:title</code></p>
+    <h4>Get Movie by Title</h4>
+    <p><strong>URL:</strong> <code>/movies/:Title</code></p>
     <p><strong>Method:</strong> GET</p>
     <p><strong>Description:</strong> Retrieves details of a specific movie by its title.</p>
-    <p><strong>URL Parameters:</strong> <code>title</code> (string) - The title of the movie to retrieve.</p>
+    <p><strong>URL Parameters:</strong> <code>Title</code> (string) - The title of the movie to retrieve.</p>
     <pre>
     <code>
     Response (if movie is found):
     Status: 200 OK
     {
-        "title": "Dune",
-        "year": "2022",
-        "genre": "Sci-fi",
-        "id": "1"
+        "_id": "664a6b0e0f0177a700e79dc7",
+        "Title": "The Lion King",
+        "Description": "Lion prince Simba and his father are targeted by his bitter uncle, who wants to ascend the throne himself.",
+        "Genre": {
+            "Name": "Animation",
+            "Description": "Animation film is a genre in which the images are primarily created through animation techniques."
+        },
+        "Director": {
+            "Name": "Roger Allers and Rob Minkoff",
+            "Bio": "Roger Allers is an American film director, screenwriter, and animator. Rob Minkoff is an American filmmaker.",
+            "Birth": "1949 (Allers), 1962 (Minkoff)"
+        },
+        "ImagePath": "lionking.png",
+        "Featured": true,
+        "movieId": "00010"
     }
 
     Response (if movie is not found):
@@ -59,17 +83,28 @@
     </code>
     </pre>
 
-    <h3>Add a New Movie</h3>
+    <h4>Add a New Movie</h4>
     <p><strong>URL:</strong> <code>/movies</code></p>
     <p><strong>Method:</strong> POST</p>
-    <p><strong>Description:</strong> Adds a new movie to the list of favorite movies.</p>
+    <p><strong>Description:</strong> Adds a new movie to the list of movies.</p>
     <p><strong>Request Body:</strong></p>
     <pre>
     <code>
     {
-        "title": "New Movie",
-        "year": "2024",
-        "genre": "Drama"
+        "Title": "New Movie",
+        "Description": "Description of the new movie",
+        "Genre": {
+            "Name": "Genre Name",
+            "Description": "Genre Description"
+        },
+        "Director": {
+            "Name": "Director Name",
+            "Bio": "Director Bio",
+            "Birth": "YYYY"
+        },
+        "Actors": ["Actor 1", "Actor 2"],
+        "ImagePath": "path/to/image",
+        "Featured": true
     }
     </code>
     </pre>
@@ -78,10 +113,21 @@
     Response (if movie is successfully added):
     Status: 201 Created
     {
-        "title": "New Movie",
-        "year": "2024",
-        "genre": "Drama",
-        "id": "generated-uuid"
+        "_id": "generated-uuid",
+        "Title": "New Movie",
+        "Description": "Description of the new movie",
+        "Genre": {
+            "Name": "Genre Name",
+            "Description": "Genre Description"
+        },
+        "Director": {
+            "Name": "Director Name",
+            "Bio": "Director Bio",
+            "Birth": "YYYY"
+        },
+        "Actors": ["Actor 1", "Actor 2"],
+        "ImagePath": "path/to/image",
+        "Featured": true
     }
 
     Response (if request body is missing or invalid):
@@ -90,27 +136,35 @@
     </code>
     </pre>
 
-    <h3>Update Movie Genre</h3>
-    <p><strong>URL:</strong> <code>/movies/:title/:genre</code></p>
+    <h4>Update Movie Genre</h4>
+    <p><strong>URL:</strong> <code>/movies/:Title</code></p>
     <p><strong>Method:</strong> PUT</p>
     <p><strong>Description:</strong> Updates the genre of a specific movie by its title.</p>
     <p><strong>URL Parameters:</strong> 
-        <code>title</code> (string) - The title of the movie to update.<br>
-        <code>genre</code> (string) - The new genre for the movie.
+        <code>Title</code> (string) - The title of the movie to update.<br>
     </p>
+    <p><strong>Request Body:</strong></p>
+    <pre>
+    <code>
+    {
+        "Name": "New Genre Name",
+        "Description": "New Genre Description"
+    }
+    </code>
+    </pre>
     <pre>
     <code>
     Response (if movie is found and updated):
-    Status: 201 Created
-    Movie {title} genre updated to new genre
+    Status: 200 OK
+    Genre details updated
 
     Response (if movie is not found):
     Status: 404 Not Found
-    Movie not found!
+    Movie not found
     </code>
     </pre>
 
-    <h3>Delete Movie by ID</h3>
+    <h4>Delete Movie by ID</h4>
     <p><strong>URL:</strong> <code>/movies/:id</code></p>
     <p><strong>Method:</strong> DELETE</p>
     <p><strong>Description:</strong> Deletes a movie from the list by its ID.</p>
@@ -118,175 +172,163 @@
     <pre>
     <code>
     Response (if movie is found and deleted):
-    Status: 201 Created
-    Movie title was deleted successfully
+    Status: 200 OK
+    Movie deleted
 
     Response (if movie is not found):
     Status: 404 Not Found
-    Movie not found!
+    Movie not found
     </code>
     </pre>
 
-    <h3>Get Documentation</h3>
-    <p><strong>URL:</strong> <code>/documentation</code></p>
+    <h3>User Endpoints</h3>
+
+    <h4>Get All Users</h4>
+    <p><strong>URL:</strong> <code>/users</code></p>
     <p><strong>Method:</strong> GET</p>
-    <p><strong>Description:</strong> Retrieves the API documentation.</p>
+    <p><strong>Description:</strong> Retrieves a list of all users.</p>
     <pre>
     <code>
     Response:
     Status: 200 OK
-    Serves the documentation.html file.
+    [
+        {
+            "_id": "666c3c644ef27683b90612a5",
+            "Username": "Test4",
+            "Email": "test@test2.com",
+            "Password": "$2b$10$N3YIiEJ8uSf/WQwAh4Stdu8/KowfZ0Ur6J7qYVoZs.C9Cq/h80FY2",
+            "Role": "user",
+            "FavouriteMovies": [],
+            "__v": 0
+        }
+    ]
     </code>
     </pre>
 
-    <h3>Get Home Page</h3>
-    <p><strong>URL:</strong> <code>/</code></p>
+    <h4>Get User by ID</h4>
+    <p><strong>URL:</strong> <code>/users/:id</code></p>
     <p><strong>Method:</strong> GET</p>
-    <p><strong>Description:</strong> Retrieves the home page.</p>
+    <p><strong>Description:</strong> Retrieves details of a specific user by their ID.</p>
+    <p><strong>URL Parameters:</strong> <code>id</code> (string) - The ID of the user to retrieve.</p>
     <pre>
     <code>
-    Response:
+    Response (if user is found):
     Status: 200 OK
-    Serves the documentation.html file from the public directory.
+    {
+        "_id": "666c3c644ef27683b90612a5",
+        "Username": "Test4",
+        "Email": "test@test2.com",
+        "Password": "$2b$10$N3YIiEJ8uSf/WQwAh4Stdu8/KowfZ0Ur6J7qYVoZs.C9Cq/h80FY2",
+        "Role": "user",
+        "FavouriteMovies": [],
+        "__v": 0
+    }
+
+    Response (if user is not found):
+    Status: 404 Not Found
+    User not found
     </code>
     </pre>
 
-    <h3>Get All Users</h3>
-<p><strong>URL:</strong> <code>/users</code></p>
-<p><strong>Method:</strong> GET</p>
-<p><strong>Description:</strong> Retrieves a list of all users.</p>
-<pre>
-<code>
-Response:
-Status: 200 OK
-[
-    {"id": "1", "Username": "user1", "Email": "user1@example.com", "Birthdate": "1990-01-01"},
-    {"id": "2", "Username": "user2", "Email": "user2@example.com", "Birthdate": "1992-02-02"}
-]
-</code>
-</pre>
+    <h4>Add a New User</h4>
+    <p><strong>URL:</strong> <code>/users</code></p>
+    <p><strong>Method:</strong> POST</p>
+    <p><strong>Description:</strong> Adds a new user.</p>
+    <p><strong>Request Body:</strong></p>
+    <pre>
+    <code>
+    {
+        "Username": "newuser",
+        "Password": "password123",
+        "Email": "newuser@example.com"
+    }
+    </code>
+    </pre>
+    <pre>
+    <code>
+    Response (if user is successfully added):
+    Status: 201 Created
+    {
+        "_id": "generated-uuid",
+        "Username": "newuser",
+        "Email": "newuser@example.com",
+        "Password": "$2b$10$N3YIiEJ8uSf/WQwAh4Stdu8/KowfZ0Ur6J7qYVoZs.C9Cq/h80FY2",
+        "Role": "user",
+        "FavouriteMovies": [],
+        "__v": 0
+    }
 
-<h3>Get User by ID</h3>
-<p><strong>URL:</strong> <code>/users/:id</code></p>
-<p><strong>Method:</strong> GET</p>
-<p><strong>Description:</strong> Retrieves details of a specific user by their ID.</p>
-<p><strong>URL Parameters:</strong> <code>id</code> (string) - The ID of the user to retrieve.</p>
-<pre>
-<code>
-Response (if user is found):
-Status: 200 OK
-{
-    "id": "1",
-    "Username": "user1",
-    "Email": "user1@example.com",
-    "Birthdate": "1990-01-01"
-}
+    Response (if request body is missing or invalid):
+    Status: 400 Bad Request
+    Username or email already exists
+    </code>
+    </pre>
 
-Response (if user is not found):
-Status: 400 Bad Request
-User not found
-</code>
-</pre>
+    <h4>Update User</h4>
+    <p><strong>URL:</strong> <code>/users/:id</code></p>
+    <p><strong>Method:</strong> PUT</p>
+    <p><strong>Description:</strong> Updates any of the values on the user record except for the password.</p>
+    <p><strong>URL Parameters:</strong> <code>id</code> (string) - The ID of the user to update.</p>
+    <p><strong>Request Body:</strong> Fields to update (at least one is required).</p>
+    <pre>
+    <code>
+    {
+        "Username": "updateduser",
+        "Email": "updateduser@example.com"
+    }
+    </code>
+    </pre>
+    <pre>
+    <code>
+    Response (if user is found and updated):
+    Status: 200 OK
+    User updated
 
-<h3>Add a New User</h3>
-<p><strong>URL:</strong> <code>/users</code></p>
-<p><strong>Method:</strong> POST</p>
-<p><strong>Description:</strong> Adds a new user.</p>
-<p><strong>Request Body:</strong></p>
-<pre>
-<code>
-{
-    "Username": "newuser",
-    "Email": "newuser@example.com",
-    "password": "password123",
-    "Birthdate": "2000-01-01"
-}
-</code>
-</pre>
-<pre>
-<code>
-Response (if user is successfully added):
-Status: 201 Created
-User added
+    Response (if user is not found):
+    Status: 404 Not Found
+    User not found
+    </code>
+    </pre>
 
-Response (if request body is missing or invalid):
-Status: 400 Bad Request
-User must have a username, email, password, and birthdate
-</code>
-</pre>
+    <h4>Add a Favourite Movie to a User</h4>
+    <p><strong>URL:</strong> <code>/users/:id/:movieId</code></p>
+    <p><strong>Method:</strong> PUT</p>
+    <p><strong>Description:</strong> Adds a favourite movie to a user's list of favourite movies.</p>
+    <p><strong>URL Parameters:</strong> 
+        <code>id</code> (string) - The ID of the user.<br>
+        <code>movieId</code> (string) - The ID of the movie to add.
+    </p>
+    <pre>
+    <code>
+    Response (if user is found and movie is added):
+    Status: 200 OK
+    Movie favourited successfully
 
-<h3>Update User</h3>
-<p><strong>URL:</strong> <code>/users/:id</code></p>
-<p><strong>Method:</strong> PUT</p>
-<p><strong>Description:</strong> Updates any of the values on the user record.</p>
-<p><strong>URL Parameters:</strong> <code>id</code> (string) - The ID of the user to update.</p>
-<p><strong>Request Body:</strong> Fields to update (at least one is required).</p>
-<pre>
-<code>
-{
-    "Username": "updateduser",
-    "Email": "updateduser@example.com",
-    "password": "newpassword123",
-    "Birthdate": "2000-01-01"
-}
-</code>
-</pre>
-<pre>
-<code>
-Response (if user is found and updated):
-Status: 201 Created
-User updated
+    Response (if user is not found):
+    Status: 404 Not Found
+    User not found
+    </code>
+    </pre>
 
-Response (if user is not found):
-Status: 400 Bad Request
-Internal server error
-</code>
-</pre>
+    <h4>Delete a Favourite Movie from a User</h4>
+    <p><strong>URL:</strong> <code>/users/:id/:movieId</code></p>
+    <p><strong>Method:</strong> DELETE</p>
+    <p><strong>Description:</strong> Deletes a favourite movie from a user's list by its ID.</p>
+    <p><strong>URL Parameters:</strong> 
+        <code>id</code> (string) - The ID of the user.<br>
+        <code>movieId</code> (string) - The ID of the movie to delete.
+    </p>
+    <pre>
+    <code>
+    Response (if user is found and movie is deleted):
+    Status: 200 OK
+    Favourite movie removed successfully
 
-<h3>Add a Favourite Movie to a User</h3>
-<p><strong>URL:</strong> <code>/users/:id/:movieId</code></p>
-<p><strong>Method:</strong> PUT</p>
-<p><strong>Description:</strong> Adds a favourite movie to a user's list of favourite movies.</p>
-<p><strong>URL Parameters:</strong> 
-    <code>id</code> (string) - The ID of the user.<br>
-    <code>movieId</code> (string) - The ID of the movie to add.
-</p>
-<pre>
-<code>
-Response (if user is found and movie is added):
-Status: 201 Created
-Movie added to user's favourites
-
-Response (if user is not found):
-Status: 400 Bad Request
-User not found
-
-Response (if movie is not added):
-Status: 400 Bad Request
-Movie not added
-</code>
-</pre>
-
-<h3>Delete a Favourite Movie from a User</h3>
-<p><strong>URL:</strong> <code>/users/:id/:movieId</code></p>
-<p><strong>Method:</strong> DELETE</p>
-<p><strong>Description:</strong> Deletes a favourite movie from a user's list by its ID.</p>
-<p><strong>URL Parameters:</strong> 
-    <code>id</code> (string) - The ID of the user.<br>
-    <code>movieId</code> (string) - The ID of the movie to delete.
-</p>
-<pre>
-<code>
-Response (if user is found and movie is deleted):
-Status: 200 OK
-Movie deleted successfully
-
-Response (if user is not found):
-Status: 400 Bad Request
-User not found
-</code>
-</pre>
-
+    Response (if user is not found):
+    Status: 404 Not Found
+    User not found
+    </code>
+    </pre>
 
     <h2>Error Handling</h2>
     <p><strong>500 Internal Server Error:</strong> Catches any internal server errors and responds with a status code 500 and a message "Internal server error".</p>
