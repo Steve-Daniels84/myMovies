@@ -1,7 +1,9 @@
+require('dotenv').config();
 const mongoose = require('mongoose'),
 requiredRole = require('../validation/validations.js');
 
-mongoose.connect('mongodb://localhost:27017/myMovies', {useNewUrlParser: true, useUnifiedTopology: true});
+// mongoose.connect('mongodb://localhost:27017/myMovies', {useNewUrlParser: true, useUnifiedTopology: true});
+mongoose.connect(process.env.CONNECTION_URI, {useNewUrlParser: true, useUnifiedTopology: true});
 
 const Models = require('../models/models.js');
 

@@ -1,0 +1,2 @@
+127.0.0.1 - - [17/Jun/2024:08:13:29 +0000] "POST /users/ HTTP/1.1" 201 274 "-" "Thunder Client (https://www.thunderclient.com)"
+127.0.0.1 - - [17/Jun/2024:08:13:46 +0000] "GET /movies HTTP/1.1" 200 6193 "-" "Thunder Client (https://www.thunderclient.com)"
