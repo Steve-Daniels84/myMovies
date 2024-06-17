@@ -12,8 +12,8 @@ const createUserRules = [
   ];
 
   const updateUserRules = [
-    check('Username', 'Username must contain alphanumeric characters only.').isAlphanumeric(),
-    check('Email', 'Email does not appear to be valid.').isEmail()
+    check('Username', 'Username must contain alphanumeric characters only.').optional().isAlphanumeric(),
+    check('Email', 'Email does not appear to be valid.').optional.isEmail()
   ];
 
   const addMovieRules = [
