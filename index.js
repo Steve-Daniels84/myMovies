@@ -47,7 +47,7 @@ app.get('/', (req, res) => {res.status(200).sendFile('documentation.html', {root
 app.get('/documentation', (req, res) => {res.status(200).sendFile('documentation.html', {root: __dirname + '/public'});});
 
 //Movie routes
-app.get('/movies', requiredRole('user'), movies.listAllMovies); //list all movies
+app.get('/movies', movies.listAllMovies); //list all movies
 app.get('/movies/:Title', requiredRole('user'), passport.authenticate('jwt', { session: false }), movies.getMovieByTitle);//Get movie by title
 app.post('/movies', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }),  movies.addMovie); //Adds a movie to the library
 app.put('/movies/:Title', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }), movies.updateGenreByMovieTitle); //Update Genre info for a movie by its title
