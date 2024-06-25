@@ -18,6 +18,14 @@ async function listAllMovies (req, res) {
     });
 };
 
+async function getMovieByGenre (req, res) {
+    await Movies.find({"Genre.Name": req.params.Genre})
+    .then((movie) => {
+        res.status(200).json(movie)
+    })
+    .catch ((err) => res.status(400).send('Error: ' + err));
+};
+
 async function getMovieByTitle (req, res) {
     await Movies.findOne({Title: req.params.Title})
     .then((movie) => {
@@ -100,5 +108,5 @@ async function addMovie (req, res) {
     };
 
 module.exports = {
-    listAllMovies, getMovieByTitle, addMovie, updateGenreByMovieTitle, deleteMovieById
+    listAllMovies, getMovieByTitle, addMovie, updateGenreByMovieTitle, deleteMovieById, getMovieByGenre
 }
