@@ -47,8 +47,8 @@ app.get('/', (req, res) => {res.status(200).sendFile('documentation.html', {root
 app.get('/documentation', (req, res) => {res.status(200).sendFile('documentation.html', {root: __dirname + '/public'});});
 
 //Movie routes
-app.get('/movies', movies.listAllMovies); //list all movies
-app.get('/movies/:Genre', movies.getMoviesByGenre);//Get movie by Genre
+app.get('/movies', requiredRole('user'), passport.authenticate('jwt', { session: false }), movies.listAllMovies); //list all movies
+app.get('/movies/:Genre', requiredRole('user'), passport.authenticate('jwt', { session: false }), movies.getMoviesByGenre);//Get movie by Genre
 app.get('/movies/:Title', requiredRole('user'), passport.authenticate('jwt', { session: false }), movies.getMovieByTitle);//Get movie by title
 app.post('/movies', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }),  movies.addMovie); //Adds a movie to the library
 app.put('/movies/:Title', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }), movies.updateGenreByMovieTitle); //Update Genre info for a movie by its title
@@ -58,7 +58,6 @@ app.delete('/movies/:id', requiredRole('sysAdmin'), passport.authenticate('jwt',
 app.get('/users', requiredRole('sysAdmin'), passport.authenticate('jwt', { session: false }),  users.listUsers); //Lists all users
 app.get('/users/:id', requiredRole('user'), passport.authenticate('jwt', { session: false }), validateUserId,  users.getUserById); //Gets a user by its id
 app.put('/users/:id', updateUserRules, validateInput, requiredRole('user'), passport.authenticate('jwt', { session: false }), validateUserId, users.updateUser); //Update a user
-app.put('/users/:id', )
 app.post('/users/', createUserRules, validateInput, users.addUser); //Add a user
 app.put('/users/:id/:movieId', requiredRole('user'), passport.authenticate('jwt', {session: false}), validateUserId, users.addMovie) //Adds a movie to a users favourites
 app.delete('/users/:id', requiredRole('user'), passport.authenticate('jwt', { session: false }), validateUserId, users.deleteUser); //Delete a user
