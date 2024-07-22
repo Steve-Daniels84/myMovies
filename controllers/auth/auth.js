@@ -40,6 +40,7 @@ module.exports = (router) => {
         }
         let response = { 
           "message": "Success",
+          "userId": user._id,
           "token": generateJWTToken(payload)
         };
         return res.send(response);
