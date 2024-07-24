@@ -25,7 +25,8 @@ module.exports = (router) => {
       let payload = {
         Username: user.Username,
         id: user.id,
-        
+        email: user.Email,
+        favouriteMovies: user.FavouriteMovies
       }
 
       if (error || !user) {
