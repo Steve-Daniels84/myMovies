@@ -43,7 +43,8 @@ module.exports = (router) => {
           "userId": user._id,
           "token": generateJWTToken(payload),
           "email": user.Email,
-          "favourites": user.FavouriteMovies
+          "favourites": user.FavouriteMovies,
+          "username": user.Username
         };
         return res.send(response);
       });
