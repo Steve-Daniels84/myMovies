@@ -24,9 +24,8 @@ module.exports = (router) => {
      
       let payload = {
         Username: user.Username,
-        id: user.id,
-        email: user.Email,
-        favouriteMovies: user.FavouriteMovies
+        id: user.id
+        
       }
 
       if (error || !user) {
@@ -42,7 +41,9 @@ module.exports = (router) => {
         let response = { 
           "message": "Success",
           "userId": user._id,
-          "token": generateJWTToken(payload)
+          "token": generateJWTToken(payload),
+          "email": user.Email,
+          "favourites": user.FavouriteMovies
         };
         return res.send(response);
       });
