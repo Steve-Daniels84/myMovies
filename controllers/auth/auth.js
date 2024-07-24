@@ -42,9 +42,9 @@ module.exports = (router) => {
           "message": "Success",
           "userId": user._id,
           "token": generateJWTToken(payload),
-          "email": user.Email,
-          "favourites": user.FavouriteMovies,
-          "username": user.Username
+          "Email": user.Email,
+          "FavouriteMovies": user.FavouriteMovies,
+          "Username": user.Username
         };
         return res.send(response);
       });
