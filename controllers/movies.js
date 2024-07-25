@@ -19,7 +19,7 @@ async function listAllMovies (req, res) {
 };
 
 async function getMovieById (req, res) {
-    await Movies.find({'_id': isObjectIdOrHexString(req.params.id)})
+    await Movies.find({'_id': req.params.id})
     .then (movies => {
         res.status(200).json(movies);
     })
