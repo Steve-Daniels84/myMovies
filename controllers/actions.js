@@ -12,7 +12,7 @@ const {
 
   const s3Client = new S3Client({
     region: process.env.AWS_DEFAULT_REGION || "us-east-1",
-    endpoint: "http://localhost:4566", //remove this line before deployment
+    // endpoint: "http://localhost:4566", //remove this line before deployment
     credentials: {
       accessKeyId: process.env.AWS_ACCESS_KEY_ID,
       secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
