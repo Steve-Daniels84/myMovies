@@ -10,6 +10,8 @@ const express = require('express'),
     movies = require('./controllers/movies.js'),
     users = require('./controllers/users.js'),
     cors = require('cors');
+    actions = require('./controllers/actions.js');
+    fileUpload = require("express-fileupload");
 
 const { check, validationResult } = require('express-validator');
 const {requiredRole, validateInput, validateUserId} = require('./validation/validations.js');
@@ -19,7 +21,16 @@ app = express();
 
 app.use(cors())
 
+app.use(fileUpload({
+    limits: { fileSize: 50 * 1024 * 1024 },
+    useTempFiles: false, // Don't use temp files
+    debug: true,
+    abortOnLimit: true,
+    responseOnLimit: "File size limit exceeded"
+  }));
+
 app.use(bodyParser.json());
+
 
 let auth = require('./controllers/auth/auth.js')(app);
 
@@ -63,6 +74,31 @@ app.post('/users/', createUserRules, validateInput, users.addUser); //Add a user
 app.put('/users/:id/:movieId', requiredRole('user'), passport.authenticate('jwt', {session: false}), validateUserId, users.addMovie) //Adds a movie to a users favourites
 app.delete('/users/:id', requiredRole('user'), passport.authenticate('jwt', { session: false }), validateUserId, users.deleteUser); //Delete a user
 app.delete('/users/:id/:movieId', requiredRole('user'), passport.authenticate('jwt', { session: false }), validateUserId, users.deleteMovie); //Deletes a fovurite movie from a user
+
+//Aws Routes
+
+//list objects in the bucket
+app.get('/objects', (req, res) => {
+    actions.getObjects(req, res);
+});
+
+//get an object from the bucket
+app.get('/objects/:key', (req, res) => {
+    actions.getObject(req, res);
+});
+
+//add object to the bucket
+app.post('/objects', (req, res) => {
+    try {
+      actions.addObject(req, res);
+    } catch (error) {
+      console.error("Route handler caught error:", error);
+      if (!res.headersSent) {
+        res.status(500).send("Error processing upload: " + error.message);
+      }
+    }
+  });
+
 
 const port = process.env.PORT || 8080;
 app.listen(port,'0.0.0.0', () => {
