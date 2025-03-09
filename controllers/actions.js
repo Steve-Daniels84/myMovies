@@ -103,11 +103,8 @@ const {
       const { Body } = await s3Client.send(command); // `Body` is a stream
   
       // Set headers for file download
-      res.setHeader(
-        "Content-Disposition",
-        `attachment; filename="${req.params.key}"`
-      );
-      res.setHeader("Content-Type", "image/png"); // or "image/jpeg" based on your file type  
+    res.setHeader("Content-Type", "image/png"); // Dynamically set the content type
+    res.setHeader("Cache-Control", "public, max-age=31536000");   
       // Pipe the S3 object stream to the response
       Body.pipe(res);
     } catch (error) {
